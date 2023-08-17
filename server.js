@@ -26,3 +26,7 @@ app.get("/test", (request, response) => {
 app.listen(PORT, () => console.log(`listening on ${PORT}`)); //check code!
 
 // added my checkeout!
+
+// schema/modal
+// controllers
+//routes
