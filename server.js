@@ -1,13 +1,23 @@
 "use strict";
-
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-
+const mongoose = require("mongoose");
 const app = express();
+const PORT = process.env.PORT || 3001;
+const mongoDB = process.env.MONGOCONNECTION;
+
 app.use(cors());
 
-const PORT = process.env.PORT || 3001;
+// add the start up here
+// This codeblock came from mongoose documentation 
+mongoose.set("strictQuery", false);
+
+main().catch((err) => console.log(err));
+async function main() {
+  await mongoose.connect(mongoDB);
+  console.log("MongoDb Connected")
+}
 
 app.get("/test", (request, response) => {
   response.send("Hello World");
