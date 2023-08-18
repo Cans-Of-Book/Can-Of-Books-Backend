@@ -10,7 +10,7 @@ const mongoDB = process.env.MONGOCONNECTION;
 app.use(cors());
 
 // add the start up here
-// This codeblock came from mongoose documentation 
+// This code block came from mongoose documentation 
 mongoose.set("strictQuery", false);
 
 main().catch((err) => console.log(err));
@@ -22,6 +22,8 @@ async function main() {
 app.get("/test", (request, response) => {
   response.send("Hello World");
 });
+
+app.get("/books", )
 
 app.listen(3001, () => {
   console.log("Listen on the port 3001...");
