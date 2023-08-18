@@ -29,6 +29,6 @@ app.listen(3001, () => {
 
 // added my checkout!
 
-// schema/modal
+// schema/model
 // controllers
 //routes
