@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const bookHandler = require("./booksHandler");
 const app = express();
 const PORT = process.env.PORT || 3001;
-const mongoDB = process.env.MONGOCONNECTION;
+const mongoDB = process.env.DATABASE_URL;
 
 app.use(cors());
 
@@ -14,11 +14,11 @@ app.use(cors());
 // This code block came from mongoose documentation 
 mongoose.set("strictQuery", false);
 
-main().catch((err) => console.log(err));
-async function main() {
-  await mongoose.connect(mongoDB);
-  console.log("MongoDb Connected")
-}
+// main().catch((err) => console.log(err));
+// async function main() {
+//   await mongoose.connect(mongoDB);
+//   console.log("MongoDb Connected")
+// }
 
 app.get("/test", (request, response) => {
   response.send("Hello World");
