@@ -27,7 +27,7 @@ app.listen(3001, () => {
   console.log("Listen on the port 3001...");
 }); //check code!
 
-// added my checkeout!
+// added my checkout!
 
 // schema/modal
 // controllers
