@@ -23,10 +23,12 @@ app.get("/test", (request, response) => {
   response.send("Hello World");
 });
 
-app.listen(PORT, () => console.log(`listening on ${PORT}`)); //check code!
+app.listen(3001, () => {
+  console.log("Listen on the port 3001...");
+}); //check code!
 
-// added my checkeout!
+// added my checkout!
 
-// schema/modal
+// schema/model
 // controllers
 //routes
