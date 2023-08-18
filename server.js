@@ -5,21 +5,21 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
 const PORT = process.env.PORT || 3001;
-const mongoDB = process.env.MONGOCONNECTION;
+const mongoDB = process.env.DATABASE_URL;
 
 app.use(cors());
 
 // add the start up here
-// This codeblock came from mongoose documentation 
+// This codeblock came from mongoose documentation
 mongoose.set("strictQuery", false);
 
 main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
-  console.log("MongoDb Connected")
+  console.log("MongoDb Connected");
 }
 
-const Book = require("./book");
+const Book = require("./Book");
 
 app.get("/test", (request, response) => {
   response.send("Hello World");
@@ -33,7 +33,6 @@ app.get("/books", async (request, response) => {
     response.status(500).json({ error: "Error to Server" });
   }
 });
-
 
 app.listen(3001, () => {
   console.log("Listen on the port 3001...");
