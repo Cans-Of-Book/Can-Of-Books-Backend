@@ -19,9 +19,21 @@ async function main() {
   console.log("MongoDb Connected")
 }
 
+const Book = require("./book");
+
 app.get("/test", (request, response) => {
   response.send("Hello World");
 });
+
+app.get("/books", async (request, response) => {
+  try {
+    const books = await Book.find();
+    response.json(books);
+  } catch (error) {
+    response.status(500).json({ error: "Error to Server" });
+  }
+});
+
 
 app.listen(3001, () => {
   console.log("Listen on the port 3001...");
