@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const bookHandler = require("./booksHandler");
 const app = express();
 const PORT = process.env.PORT || 3001;
 const mongoDB = process.env.MONGOCONNECTION;
@@ -23,7 +24,7 @@ app.get("/test", (request, response) => {
   response.send("Hello World");
 });
 
-app.get("/books", )
+app.get("/books", bookHandler)
 
 app.listen(3001, () => {
   console.log("Listen on the port 3001...");
