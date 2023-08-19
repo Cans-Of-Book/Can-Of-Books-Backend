@@ -30,7 +30,7 @@ app.get("/test", (request, response) => {
 
 app.get("/books", async (request, response) => {
   try {
-    const books = await Book.find();
+    const books = await Book.find({});
     response.json(books);
   } catch (error) {
     response.status(500).json({ error: "Error to Server" });
