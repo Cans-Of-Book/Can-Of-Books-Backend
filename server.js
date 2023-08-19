@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const  bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const bookHandler = require("./booksHandler");
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -37,17 +37,17 @@ app.get("/books", async (request, response) => {
   }
 });
 
-app.post ("/books", async (request, require) => {
+app.post("/books", async (request, require) => {
   try {
     const newBookData = request.body;
-    const newBook = newBook(newBookData); 
+    const newBook = newBook(newBookData);
     await newBook.save();
 
     response.status(201).json(newBook);
   } catch (err) {
-    response.status(500).json({ err: "Server Error"});
+    response.status(500).json({ err: "Server Error" });
   }
-})
+});
 
 app.listen(3001, () => {
   console.log("Listen on the port 3001...");

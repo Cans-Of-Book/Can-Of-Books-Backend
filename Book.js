@@ -13,6 +13,10 @@ const Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  URL: {
+    type: String,
+    required: true,
+  },
 });
 
 const Book = mongoose.model("Book", Schema);
