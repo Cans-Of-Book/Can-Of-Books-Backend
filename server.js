@@ -3,12 +3,14 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const  bodyParser = require("body-parser");
 const bookHandler = require("./booksHandler");
 const app = express();
 const PORT = process.env.PORT || 3001;
 const mongoDB = process.env.DATABASE_URL;
 
 app.use(cors());
+app.use(bodyParser.json()); // returns middleware that only parses JSON
 
 // add the start up here
 // This codeblock came from mongoose documentation
@@ -34,6 +36,18 @@ app.get("/books", async (request, response) => {
     response.status(500).json({ error: "Error to Server" });
   }
 });
+
+app.post ("/books", async (request, require) => {
+  try {
+    const newBookData = request.body;
+    const newBook = newBook(newBookData); 
+    await newBook.save();
+
+    response.status(201).json(newBook);
+  } catch (err) {
+    response.status(500).json({ err: "Server Error"});
+  }
+})
 
 app.listen(3001, () => {
   console.log("Listen on the port 3001...");
