@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const bookHandler = require("./booksHandler");
 const app = express();
 const PORT = process.env.PORT || 3001;
 const mongoDB = process.env.DATABASE_URL;
