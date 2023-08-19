@@ -3,12 +3,14 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const  bodyParser = require("body-parser");
 const bookHandler = require("./booksHandler");
 const app = express();
 const PORT = process.env.PORT || 3001;
 const mongoDB = process.env.DATABASE_URL;
 
 app.use(cors());
+app.use(bodyParser.json()); // returns middleware that only parses JSON
 
 // add the start up here
 // This codeblock came from mongoose documentation
