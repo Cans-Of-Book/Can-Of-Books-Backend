@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const bookHandler = require("./booksHandler");
 const app = express();
 const PORT = process.env.PORT || 3001;
+console.log("PORT", PORT);
 const mongoDB = process.env.DATABASE_URL;
 
 app.use(cors());
@@ -37,10 +38,10 @@ app.get("/books", async (request, response) => {
   }
 });
 
-app.post("/books", async (request, require) => {
+app.post("/books", async (request, response) => {
   try {
     const newBookData = request.body;
-    const newBook = newBook(newBookData);
+    const newBook = new Book(newBookData);
     await newBook.save();
 
     response.status(201).json(newBook);
@@ -51,10 +52,4 @@ app.post("/books", async (request, require) => {
 
 app.listen(3001, () => {
   console.log("Listen on the port 3001...");
-}); //check code!
-
-// added my checkout!
-
-// schema/model
-// controllers
-//routes
+});
