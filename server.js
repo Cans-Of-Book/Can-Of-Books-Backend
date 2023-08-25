@@ -50,6 +50,22 @@ app.post("/books", async (request, response) => {
   }
 });
 
+app.delete("/books/:id", async (request, response) => {
+  try {
+    const bookId = request.params.id;
+    const deletedBook = await Book.findByIdAndDelete(bookId);
+
+    if (!deletedBook) {
+      response.status(404).json({ error: "Book not found" });
+      return;
+    }
+
+    response.status(200).json({ message: "Book deleted successfully" });
+  } catch (err) {
+    response.status(500).json({ error: "Server Error" });
+  }
+});
+
 app.listen(3001, () => {
   console.log("Listen on the port 3001...");
 });
