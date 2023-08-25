@@ -65,6 +65,26 @@ app.delete("/books/:id", async (request, response) => {
     response.status(500).json({ error: "Server Error" });
   }
 });
+
+app.put("/books/:id", async (request, response) => {
+  try {
+    const bookId = request.params.id;
+    const updatedBookData = request.body;
+
+    const updatedBook = await Book.findByIdAndUpdate(bookId, updatedBookData, {
+      new: true, // Return the updated document
+    });
+
+    if (!updatedBook) {
+      response.status(404).json({ error: "Book not found" });
+      return;
+    }
+
+    response.json(updatedBook);
+  } catch (err) {
+    response.status(500).json({ error: "Server Error" });
+  }
+});
  
 app.listen(3001, () => {
   console.log("Listen on the port 3001...");
