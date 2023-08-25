@@ -11,10 +11,8 @@ console.log("PORT", PORT);
 const mongoDB = process.env.DATABASE_URL;
 
 app.use(cors());
-app.use(bodyParser.json()); // returns middleware that only parses JSON
+app.use(bodyParser.json());
 
-// add the start up here
-// This codeblock came from mongoose documentation
 mongoose.set("strictQuery", false);
 
 main().catch((err) => console.log(err));
@@ -37,20 +35,57 @@ app.get("/books", async (request, response) => {
     response.status(500).json({ error: "Error to Server" });
   }
 });
-
 app.post("/books", async (request, response) => {
   try {
+    console.log("hello");
     const newBookData = request.body;
+    console.log("hello2");
     const newBook = new Book(newBookData);
+    console.log(newBookData);
     await newBook.save();
-
     response.status(201).json(newBook);
+    console.log(newBookData);
   } catch (err) {
+    console.log(err.message);
     response.status(500).json({ err: "Server Error" });
   }
 });
 
+app.delete("/books/:id", async (request, response) => {
+  try {
+    const bookId = request.params.id;
+    const deletedBook = await Book.findByIdAndDelete(bookId);
 
+    if (!deletedBook) {
+      response.status(404).json({ error: "Book not found" });
+      return;
+    }
+
+    response.status(200).json({ message: "Book deleted successfully" });
+  } catch (err) {
+    response.status(500).json({ error: "Server Error" });
+  }
+});
+
+app.put("/books/:id", async (request, response) => {
+  try {
+    const bookId = request.params.id;
+    const updatedBookData = request.body;
+
+    const updatedBook = await Book.findByIdAndUpdate(bookId, updatedBookData, {
+      new: true, // Return the updated document
+    });
+
+    if (!updatedBook) {
+      response.status(404).json({ error: "Book not found" });
+      return;
+    }
+
+    response.json(updatedBook);
+  } catch (err) {
+    response.status(500).json({ error: "Server Error" });
+  }
+});
 
 app.listen(3001, () => {
   console.log("Listen on the port 3001...");
