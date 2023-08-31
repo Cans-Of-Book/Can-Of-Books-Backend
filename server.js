@@ -23,38 +23,43 @@ async function main() {
 
 const Book = require("./Book");
 
+app.use((req, res, next) => {
+  req.user = { email: "kil91402@gmail.com" };
+  next();
+});
+
 app.get("/test", (request, response) => {
   response.send("Hello World");
 });
 
 app.get("/books", async (request, response) => {
   try {
-    const books = await Book.find({});
+    const books = await Book.find({ userEmail: request.user.email });
     response.json(books);
   } catch (error) {
     response.status(500).json({ error: "Error to Server" });
   }
 });
+
 app.post("/books", async (request, response) => {
   try {
-    console.log("hello");
     const newBookData = request.body;
-    console.log("hello2");
-    const newBook = new Book(newBookData);
-    console.log(newBookData);
+    newBookData.userEmail = request.user.email;
     await newBook.save();
     response.status(201).json(newBook);
-    console.log(newBookData);
   } catch (err) {
     console.log(err.message);
     response.status(500).json({ err: "Server Error" });
   }
 });
 
-app .delete("/books/:id", async (request, response) => {
-  try{
+app.delete("/books/:id", async (request, response) => {
+  try {
     const bookId = request.params.id;
-    const deletedBook = await Book.findByIdAndDelete(bookId);
+    const deletedBook = await Book.findOneAndDelete({
+      _id: bookId,
+      userEmail: request.user.email,
+    });
 
     if (!deletedBook) {
       response.status(404).json({ error: "Book not found" });
@@ -72,9 +77,11 @@ app.put("/books/:id", async (request, response) => {
     const bookId = request.params.id;
     const updatedBookData = request.body;
 
-    const updatedBook = await Book.findByIdAndUpdate(bookId, updatedBookData, {
-      new: true, // Return the updated document
-    });
+    const updatedBook = await Book.findOneAndUpdate(
+      { _id: bookId, userEmail: request.user.email },
+      updatedBookData,
+      { new: true }
+    );
 
     if (!updatedBook) {
       response.status(404).json({ error: "Book not found" });
@@ -87,6 +94,6 @@ app.put("/books/:id", async (request, response) => {
   }
 });
 
-app.listen(3001, () => {
-  console.log("Listen on the port 3001...");
+app.listen(PORT, () => {
+  console.log(`Listen on the port ${PORT}...`);
 });
