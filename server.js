@@ -51,7 +51,7 @@ app.post("/books", async (request, response) => {
   }
 });
 
-app .delete("/books/:id", async (request, response) => {
+app.delete("/books/:id", async (request, response) => {
   try{
     const bookId = request.params.id;
     const deletedBook = await Book.findByIdAndDelete(bookId);
